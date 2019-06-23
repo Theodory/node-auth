@@ -1,6 +1,6 @@
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var indexRouter = require('./index');
+var usersRouter = require('./users');
 
 module.exports = (app) => {
 	app.use('/', indexRouter);
