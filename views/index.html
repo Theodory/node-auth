@@ -3,10 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Welcome</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="/stylesheets/welcome.css">
 </head>
 <body>
+	<%- include blocks/header.html -%>
 	<div class="cont">
 		<div class="mouse"></div>
 		<div class="app">
@@ -21,9 +24,9 @@
 			</div>
 
 			<div class="app__text app__text--1">
-				<div class="app__text-line app__text-line--4"><a href="/auth/login">Auth</a> </div>
-				<div class="app__text-line app__text-line--3">ut le</div>
-				<div class="app__text-line app__text-line--2">non tincidunt </div>
+				<div class="app__text-line app__text-line--3"><a href="/auth/login">Welcome</a> </div>
+				<div class="app__text-line app__text-line--3">To </div>
+				<div class="app__text-line app__text-line--2">Node Playground </div>
 				<div class="app__text-line app__text-line--1"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/537051/opus-attachment.png" alt="" /></div>
 			</div>
 
@@ -41,16 +44,21 @@
 			</ul>
 		</div>
 	</div>
+
 	<a href="https://dribbble.com/shots/2936160-Opus-Animation" target="_blank" class="icon-link">
 		<img src="http://icons.iconarchive.com/icons/uiconstock/socialmedia/256/Dribbble-icon.png">
 	</a>
 	<a href="https://twitter.com/mrspok407" target="_blank" class="icon-link icon-link--twitter">
 		<img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png">
 	</a>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 	<script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
+	src="https://code.jquery.com/jquery-3.4.1.min.js"
+	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	crossorigin="anonymous"></script>
 	<script src="/javascripts/welcome.js"></script>
 </body>
 </html>
