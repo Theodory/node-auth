@@ -1,4 +1,4 @@
-
+const { check, validationResult } = require('express-validator');
 
 exports.index  =  (req, res) => {
 	res.render('register');
