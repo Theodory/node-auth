@@ -5,8 +5,6 @@ var userController = require('../controllers/userController');
 
 router.get('/', userController.index);
 
-router.post('/', (req, res, next) =>{
-  res.render('register');
-});
+router.post('/', userController.register);
 
 module.exports = router;
