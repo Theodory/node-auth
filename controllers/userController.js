@@ -6,5 +6,5 @@ exports.index  =  (req, res) => {
 
 //register
 exports.register = (req, res) => {
-	
+	res.send(req.body);
 }
