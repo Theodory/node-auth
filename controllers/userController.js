@@ -16,15 +16,13 @@ exports.register = (req, res) => {
 		if(errors['errors'].length == 1){
 			customErrors.push(errors["errors"][0]["msg"]);
 			req.flash('errors', customErrors);
-			return res.send(customErrors);
+			return res.redirect('/auth');
 		}else{
 			 for(let key in errors["errors"]){
 			 	customErrors.push(errors["errors"][key]["msg"]);
 			 }
 			 req.flash('errors', customErrors);
-			 return res.send(customErrors);
-			
-
+			 return res.redirect('/auth');
 		}
 		
 	}
