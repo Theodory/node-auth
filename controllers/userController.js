@@ -36,17 +36,20 @@ exports.register = (req, res) => {
 	//Hash password
 	var hash = bcrypt.hashSync(pass, 10);
 
-	console.log(hash);
-
 	models.User.create({
 		firstName : firstName,
 		lastName : secondName,
 		email : req.body.email,
 		password : hash,
 	}).then(user => {
+		let sess = req.session;
+		req.session.email = req.body.email;
 		req.flash('errors', "User stored successifully");
 		req.flash('errors', JSON.stringify(user));
-		return res.redirect('/auth');
+		return res.render('home',{
+			layout:false,
+			session: req.session
+		});
 	});
 	
 
