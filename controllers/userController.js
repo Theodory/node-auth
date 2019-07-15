@@ -43,13 +43,11 @@ exports.register = (req, res) => {
 		password : hash,
 	}).then(user => {
 		let sess = req.session;
-		req.session.email = req.body.email;
+		req.session.user = {'email': email,'firstName': firstName};
+		res.locals.user = req.session.user;
 		req.flash('errors', "User stored successifully");
 		req.flash('errors', JSON.stringify(user));
-		return res.render('home',{
-			layout:false,
-			session: req.session
-		});
+		return res.redirect('/auth')
 	});
 	
 
