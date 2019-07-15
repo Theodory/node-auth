@@ -1,5 +1,6 @@
 const { check, validationResult } = require('express-validator');
 const models = require('../models/');
+const bcrypt = require('bcrypt');
 
 
 exports.index  =  (req, res) => {
@@ -32,11 +33,16 @@ exports.register = (req, res) => {
 		
 	}
 
+	//Hash password
+	var hash = bcrypt.hashSync(pass, 10);
+
+	console.log(hash);
+
 	models.User.create({
 		firstName : firstName,
 		lastName : secondName,
 		email : req.body.email,
-		password : pass,
+		password : hash,
 	}).then(user => {
 		req.flash('errors', "User stored successifully");
 		req.flash('errors', JSON.stringify(user));
