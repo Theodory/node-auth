@@ -43,12 +43,17 @@ exports.register = (req, res) => {
 		email : req.body.email,
 		password : hash,
 	}).then(user => {
-		let sess = req.session;
-		req.session.user = user;
-		res.locals.user = JSON.stringify(req.session.user);
+		// let sess = req.session;
+		// req.session.user = user;
 		req.flash('errors', "User stored successifully");
-		req.flash('errors', JSON.stringify(user));
-		return res.render('home')
+		req.session.regenerate(()=>{
+        // Store the user's primary key
+        // in the session store to be retrieved,
+        // or in this case the entire user object
+        req.session.user = user;
+        return res.render('home')
+      });
+		return res.redirect('/auth')
 	});
 	
 

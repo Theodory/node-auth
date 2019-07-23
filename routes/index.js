@@ -7,8 +7,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/home', function(req, res, next) {
-
-	req.flash('errors', JSON.stringify());
 	res.render('home_another');
   //res.send('home_another');
 });
