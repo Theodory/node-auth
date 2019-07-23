@@ -10,16 +10,6 @@ const LocalStrategy = require('passport-local').Strategy;
 require('dotenv').config();
 const models = require(path.join(__dirname, 'models'));
 
-passport.use(new LocalStrategy(
-  function(email, password, done) {
-    models.User.findOne({ where:{email: email} }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) { return done(null, false); }
-      if (!user.verifyPassword(password)) { return done(null, false); }
-      return done(null, user);
-    });
-  }
-  ));
 
 var app = express();
 
@@ -44,7 +34,7 @@ app.use(flash());
 
 var routes = require('./routes/webRoutes')
 routes(app);
-require(path.join(__dirname, 'Config/passport.js')(passport, models.User);
+require('./Config/passport.js')(passport, models.User);
  
 
 
