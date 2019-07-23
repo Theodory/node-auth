@@ -165,9 +165,9 @@ module.exports = function(passport, user) {
 
     });
 
-    passport.deserializeUser(function(id, done) {
+    passport.deserializeUser(async function(id, done) {
 
-    	User.findById(id).then(function(user) {
+    	User.findByPk(id).then(await function(user) {
 
     		if (user) {
 
