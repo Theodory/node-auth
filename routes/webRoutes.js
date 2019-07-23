@@ -6,5 +6,4 @@ var authentication = require('./register');
 module.exports = (app) => {
 	app.use('/', indexRouter);
 	app.use('/auth', authentication);
-	
 }
