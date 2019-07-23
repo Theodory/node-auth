@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/home',isLoggedIn ,function(req, res, next) {
 	res.locals.user = req.session.user;
-	res.render('home');
+	res.render('home',{ username: req.user.name });
   //res.send('home_another');
 });
 
