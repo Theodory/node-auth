@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var logger = require('morgan');
 var flash = require('connect-flash');
+var passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 require('dotenv').config();
 
 var app = express();
@@ -26,6 +28,8 @@ app.use(session({ cookie: { maxAge: 60000 },
   saveUninitialized: false}));
 
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 var routes = require('./routes/webRoutes')
 routes(app);

@@ -1,7 +1,8 @@
 const { check, validationResult } = require('express-validator');
+const LocalStrategy = require('passport-local').Strategy;
 const models = require('../models/');
 const bcrypt = require('bcrypt');
-var session = require('express-session');
+
 
 
 exports.index  =  (req, res) => {
@@ -10,6 +11,36 @@ exports.index  =  (req, res) => {
 
 
 //register
+exports.login = (req, res) => {
+
+	passport.use(new LocalStrategy(
+		function(username, password, done) {
+			UserDetails.findOne({
+				username: username
+			}, function(err, user) {
+				if (err) {
+					return done(err);
+				}
+
+				if (!user) {
+					return done(null, false);
+				}
+
+				if (user.password != password) {
+					return done(null, false);
+				}
+				return done(null, user);
+			});
+		}
+		));
+
+	app.post('/',
+		passport.authenticate('local', { failureRedirect: '/error' }),
+		function(req, res) {
+			res.redirect('/success?username='+req.user.username);
+		});
+}
+
 exports.register = (req, res) => {
 	let firstName = req.body.fname;
 	let secondName = req.body.lname;
@@ -52,9 +83,9 @@ exports.register = (req, res) => {
         // in the session store to be retrieved,
         // or in this case the entire user object
         req.session.user = user;
-         res.locals.user = req.session.user;
+        res.locals.user = JSON.stringify(req.session.user);
         return res.render('home')
-      });
+    });
 		//return res.redirect('/auth')
 	});
 	
