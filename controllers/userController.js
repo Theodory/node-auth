@@ -1,8 +1,9 @@
+var app = require('express').express;
 const { check, validationResult } = require('express-validator');
+var passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const models = require('../models/');
 const bcrypt = require('bcrypt');
-
 
 
 exports.index  =  (req, res) => {
@@ -12,33 +13,45 @@ exports.index  =  (req, res) => {
 
 //register
 exports.login = (req, res) => {
+	let email = req.body.email;
+
+	var password = bcrypt.hashSync(req.body.password, 10);
+
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		let customErrors = [];
+		// return res.status(422).json({ errors: errors.array() });
+		if(errors['errors'].length == 1){
+
+			customErrors.push(errors["errors"][0]["msg"]);
+			req.flash('errors', customErrors);
+			return res.redirect('/auth');
+
+		}else{
+			for(let key in errors["errors"]){
+				customErrors.push(errors["errors"][key]["msg"]);
+			}
+			req.flash('errors', customErrors);
+			return res.redirect('/auth');
+		}
+		
+	}
 
 	passport.use(new LocalStrategy(
 		function(username, password, done) {
-			UserDetails.findOne({
-				username: username
-			}, function(err, user) {
-				if (err) {
-					return done(err);
-				}
-
-				if (!user) {
-					return done(null, false);
-				}
-
-				if (user.password != password) {
-					return done(null, false);
-				}
+			models.User.find({ email: email }, function (err, user) {
+				if (err) { return done(err); }
+				if (!user) { return done(null, false); }
+				if (!user.verifyPassword(password)) { return done(null, false); }
 				return done(null, user);
 			});
 		}
 		));
 
-	app.post('/',
-		passport.authenticate('local', { failureRedirect: '/error' }),
-		function(req, res) {
-			res.redirect('/success?username='+req.user.username);
-		});
+	passport.authenticate('local', { failureRedirect: '/auth' }),
+	res.render("home");
+
 }
 
 exports.register = (req, res) => {

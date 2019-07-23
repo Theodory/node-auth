@@ -8,3 +8,11 @@ exports.user = [
   check('password').isLength({ min: 6 }).withMessage('Password must be at least 6 chars long')
     .matches(/\d/).withMessage('Password must contain a number'),
 ];
+
+exports.login = [
+  // username must be an email
+
+  check('email').isEmail().withMessage('Email is invalid'),
+  check('password').isLength({ min: 6 }).withMessage('Password must be at least 6 chars long')
+    .matches(/\d/).withMessage('Password must contain a number'),
+];
