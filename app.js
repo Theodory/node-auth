@@ -11,8 +11,8 @@ require('dotenv').config();
 const models = require(path.join(__dirname, 'models'));
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    models.User.find({ username: username }, function (err, user) {
+  function(email, password, done) {
+    models.User.findOne({ where:{email: email} }, function (err, user) {
       if (err) { return done(err); }
       if (!user) { return done(null, false); }
       if (!user.verifyPassword(password)) { return done(null, false); }
@@ -38,10 +38,9 @@ app.use(session({ cookie: { maxAge: 60000 },
   secret: 'keybord cat',
   resave: false, 
   saveUninitialized: false}));
-
-app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 var routes = require('./routes/webRoutes')
 routes(app);
