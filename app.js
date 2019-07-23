@@ -5,9 +5,20 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var logger = require('morgan');
 var flash = require('connect-flash');
-var passport = require('passport');
+const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 require('dotenv').config();
+
+passport.use(new LocalStrategy(
+  function(email, password, done) {
+    models.User.find({ email: email }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (!user.verifyPassword(password)) { return done(null, false); }
+      return done(null, user);
+    });
+  }
+  ));
 
 var app = express();
 

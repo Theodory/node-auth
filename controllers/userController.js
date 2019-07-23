@@ -1,9 +1,8 @@
-var app = require('express').express;
+
 const { check, validationResult } = require('express-validator');
-var passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const models = require('../models/');
 const bcrypt = require('bcrypt');
+
 
 
 exports.index  =  (req, res) => {
@@ -15,7 +14,7 @@ exports.index  =  (req, res) => {
 exports.login = (req, res) => {
 	let email = req.body.email;
 
-	var password = bcrypt.hashSync(req.body.password, 10);
+	let password = bcrypt.hashSync(req.body.password, 10);
 
 	const errors = validationResult(req);
 
@@ -37,20 +36,9 @@ exports.login = (req, res) => {
 		}
 		
 	}
-
-	passport.use(new LocalStrategy(
-		function(username, password, done) {
-			models.User.find({ email: email }, function (err, user) {
-				if (err) { return done(err); }
-				if (!user) { return done(null, false); }
-				if (!user.verifyPassword(password)) { return done(null, false); }
-				return done(null, user);
-			});
-		}
-		));
-
-	passport.authenticate('local', { failureRedirect: '/auth' }),
-	res.render("home");
+		res.redirect('/home');
+		
+	
 
 }
 
