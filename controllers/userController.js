@@ -1,6 +1,7 @@
 const { check, validationResult } = require('express-validator');
 const models = require('../models/');
 const bcrypt = require('bcrypt');
+var session = require('express-session');
 
 
 exports.index  =  (req, res) => {
@@ -51,9 +52,10 @@ exports.register = (req, res) => {
         // in the session store to be retrieved,
         // or in this case the entire user object
         req.session.user = user;
+         res.locals.user = req.session.user;
         return res.render('home')
       });
-		return res.redirect('/auth')
+		//return res.redirect('/auth')
 	});
 	
 
