@@ -7,6 +7,7 @@ exports.index  =  (req, res) => {
 	res.render('register',{errors: req.flash('errors')});
 }
 
+
 //register
 exports.register = (req, res) => {
 	let firstName = req.body.fname;
