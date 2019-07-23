@@ -7,8 +7,22 @@ const passport = require('passport');
 router.get('/', userController.index);
 
 router.post('/',usersValidator.user,userController.register);
-router.post('/login',usersValidator.login, userController.login);
+router.post('/login',usersValidator.login, passport.authenticate('local-signin', {
+	successRedirect: '/home',
 
-router.get('/logout', userController.logout);
+	failureRedirect: '/auth'
+}));
+
+router.get('/logout',isLoggedIn, userController.logout);
+
+function isLoggedIn(req, res, next) {
+
+	if (req.isAuthenticated())
+
+		return next();
+
+	res.redirect('/auth');
+
+}
 
 module.exports = router;

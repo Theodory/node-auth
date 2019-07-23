@@ -10,12 +10,18 @@ exports.index  =  (req, res) => {
 }
 
 
-//register
-exports.login = (req, res) => {
-	let email = req.body.email;
+exports.logout = (res,req) => {
+	logout();
+	res.redirect('/auth');
 
-	let password = bcrypt.hashSync(req.body.password, 10);
 
+	
+}
+
+exports.register = (req, res) => {
+	let firstName = req.body.fname;
+	let secondName = req.body.lname;
+	let pass = req.body.password;
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
@@ -36,22 +42,29 @@ exports.login = (req, res) => {
 		}
 		
 	}
-	res.redirect('/home');
 
-	
+	//Hash password
+	var hash = bcrypt.hashSync(pass, 10);
 
-}
-
-exports.register = (req, res) => {
-	passport.authenticate('local-signin', {
-		successRedirect: '/home',
-
-		failureRedirect: '/auth'
+	models.User.create({
+		firstName : firstName,
+		lastName : secondName,
+		email : req.body.email,
+		password : hash,
+	}).then(user => {
+		// let sess = req.session;
+		// req.session.user = user;
+		req.flash('errors', "User stored successifully");
+		req.session.regenerate(()=>{
+        // Store the user's primary key
+        // in the session store to be retrieved,
+        // or in this case the entire user object
+        req.session.user = user;
+        res.locals.user = JSON.stringify(req.session.user);
+        return res.render('home')
+    });
+		//return res.redirect('/auth')
 	});
-}
-
-exports.logout = (res,req) => {
-		req.logout();
-		res.redirect('/');
 	
+
 }
