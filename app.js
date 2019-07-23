@@ -8,10 +8,11 @@ var flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 require('dotenv').config();
+const models = require(path.join(__dirname, 'models'));
 
 passport.use(new LocalStrategy(
-  function(email, password, done) {
-    models.User.find({ email: email }, function (err, user) {
+  function(username, password, done) {
+    models.User.find({ username: username }, function (err, user) {
       if (err) { return done(err); }
       if (!user) { return done(null, false); }
       if (!user.verifyPassword(password)) { return done(null, false); }
