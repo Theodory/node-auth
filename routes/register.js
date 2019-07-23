@@ -3,6 +3,7 @@ var router = express.Router();
 var usersValidator = require('../Validations/users');
 var userController = require('../controllers/userController');
 const passport = require('passport');
+var logout = require('express-passport-logout');
 
 router.get('/', userController.index);
 

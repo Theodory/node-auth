@@ -2,6 +2,7 @@ const { check, validationResult } = require('express-validator');
 const models = require('../models/');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const logout = require('express-passport-logout');
 
 
 
@@ -10,12 +11,10 @@ exports.index  =  (req, res) => {
 }
 
 
-exports.logout = (res,req) => {
-	logout();
+exports.logout = (req,res) => {
+	req.logout();
+	delete req.session;
 	res.redirect('/auth');
-
-
-	
 }
 
 exports.register = (req, res) => {
