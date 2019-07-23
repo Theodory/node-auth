@@ -44,6 +44,9 @@ app.use(flash());
 
 var routes = require('./routes/webRoutes')
 routes(app);
+require(path.join(__dirname, 'Config/passport.js')(passport, models.User);
+ 
+
 
 
 //catch 404 and forward to error handler
