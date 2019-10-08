@@ -1,2 +1,10 @@
 Node mon start
 -  nodemon start 3000
+
+1. Create Heroku Authentication token
+
+heroku authorizations:create -d "getting started token" --app filamu-app
+
+2. Run Migration in heroku
+
+heroku run php artisan migrate
